@@ -10,8 +10,22 @@ namespace SentIt.Navigation
 {
     public class Navigator : INavigator
     {
-        public ViewModelBase? CurrentViewModel { get; set; }
-
         public event Action? CurrentViewModelChanged;
+
+        private ViewModelBase? _currentViewModel;
+        public ViewModelBase? CurrentViewModel
+        {
+            get => _currentViewModel;
+            set
+            {
+                _currentViewModel = value;
+                OnCurrentViewModelChanged();
+            }
+        }
+
+        private void OnCurrentViewModelChanged()
+        {
+            CurrentViewModelChanged?.Invoke();
+        }
     }
 }

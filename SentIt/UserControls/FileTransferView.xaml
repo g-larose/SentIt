@@ -5,9 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SentIt.UserControls"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converter="clr-namespace:SentIt.Converters"
              mc:Ignorable="d" 
              Width="600"
              Height="400">
+    <UserControl.Resources>
+        <converter:BoolToColorConverter x:Key="boolToColorConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40" />
@@ -21,5 +25,61 @@
              <RowDefinition Height="*" />
              <RowDefinition Height="20" />
         </Grid.RowDefinitions>
+
+        <Border Grid.Column="0"
+                Grid.Row="1"
+                CornerRadius="12 0 0 12"
+                Background="{StaticResource PrimaryDarkBrush200}"
+                BorderBrush="{StaticResource PrimaryDarkBrush300}"
+                BorderThickness="1"
+                Width="20"
+                HorizontalAlignment="Right"
+                Margin="0 14 0 0">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="3"
+                                  ShadowDepth="3"
+                                  Direction="270"
+                                  Color="Black"
+                                  Opacity="4"/>
+            </Border.Effect>
+            
+             <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Center"
+                         Margin="0 4">
+                <Border CornerRadius="50"
+                        Background="{StaticResource PrimaryDarkBrush400}"
+                        Width="10"
+                        Height="10"
+                        Margin="0 10"/>
+                  <Border CornerRadius="50"
+                        Background="{Binding IsReady, Converter={StaticResource boolToColorConverter}}"
+                        Width="10"
+                        Height="10"
+                        Margin="0 2"/>
+                  <Border CornerRadius="50"
+                        Background="{StaticResource PrimaryDarkBrush400}"
+                        Width="10"
+                        Height="10"
+                        Margin="0 10"/>
+            </StackPanel>
+            
+        </Border>
+        <Border Grid.Column="1"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Grid.RowSpan="2"
+                CornerRadius="18"
+                BorderBrush="{StaticResource PrimaryDarkBrush300}"
+                BorderThickness="1"
+                Background="{StaticResource Primary100ToSecondary200GradientBrush}">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="4"
+                                  ShadowDepth="4"
+                                  Direction="270"
+                                  Color="Black"
+                                  Opacity=".6"/>
+            </Border.Effect>
+            
+        </Border>
     </Grid>
 </UserControl>

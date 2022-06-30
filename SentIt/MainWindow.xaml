@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SentIt"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:vm="clr-namespace:SentIt.ViewModels"
+        xmlns:uc="clr-namespace:SentIt.UserControls"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize"
         AllowsTransparency="True"
-        Background="Transparent"
+        Background="{x:Null}"
         Width="800" 
         Height="600">
     <Border Background="{StaticResource Primary100ToSecondary200GradientBrush}"
@@ -105,7 +107,8 @@
                                 Height="40"
                                 Background="Transparent"
                                 BorderBrush="{x:Null}"
-                                HorizontalContentAlignment="Center">
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding NavigateChatCommand}">
                             <Button.Content>
                                 <fa:IconImage Icon="NoteSticky"
                                               Width="30"
@@ -115,15 +118,17 @@
                         </Button>
                          <Button Width="64"
                                 Height="40"
-                                Background="Transparent"
+                                Background="{x:Null}"
                                 BorderBrush="{x:Null}"
-                                HorizontalContentAlignment="Center">
-                            <Button.Content>
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding NavigateFileShareCommand}">
+                             <Button.Content>
                                 <fa:IconImage Icon="FileArrowUp"
                                               Width="30"
                                               Height="30"
                                               Foreground="{StaticResource PrimaryLightBlueBrush}"/>
                             </Button.Content>
+                            
                         </Button>
                        <Button Width="64"
                                 Height="40"
@@ -148,10 +153,18 @@
             <!--#region  NAVBAR-->
             
             <!--#endregion-->
-            
+
             <!--#region MAIN CONTENT-->
-            <ContentControl Grid.Column="1"
-                            Grid.Row="1">
+            <ContentControl Grid.Row="1"
+                            Content="{Binding Path=CurrentViewModel}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type vm:FileTransferViewModel}">
+                        <uc:FileTransferView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:ChatViewModel}">
+                        <uc:ChatView />
+                    </DataTemplate>
+                </ContentControl.Resources>
                 
             </ContentControl>
             <!--#endregion-->

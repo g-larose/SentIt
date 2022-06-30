@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SentIt.Interfaces;
+using SentIt.Navigation;
 using SentIt.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,7 +22,8 @@ namespace SentIt
             _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
             {
                 services.AddSingleton<AppViewModel>();
-                services.AddSingleton<MainWindow>(s => new SentIt.MainWindow()
+                services.AddSingleton<INavigator, Navigator>();
+                services.AddSingleton<MainWindow>(s => new MainWindow()
                 {
                     DataContext = s.GetRequiredService<AppViewModel>()
                 });

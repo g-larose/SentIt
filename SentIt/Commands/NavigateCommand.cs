@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SentIt.Commands
 {
     public class NavigateCommand<TViewModel> : CommandBase 
-        where TViewModel : ViewModelBase
+     where TViewModel : ViewModelBase
     {
         private readonly INavigator _navigator;
         private readonly Func<TViewModel> _createViewModel;
