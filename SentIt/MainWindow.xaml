@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SentIt"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -27,7 +28,6 @@
         </Border.Effect>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -40,12 +40,22 @@
                     Background="{StaticResource PrimaryDarkBrush100}"
                     Grid.Column="0"
                     Grid.Row="0"
-                    Grid.ColumnSpan="2" MouseDown="Border_MouseDown">
+                    Grid.ColumnSpan="2" 
+                    BorderBrush="{StaticResource PrimaryDarkBrush400}"
+                    BorderThickness="0 0 0 1"
+                    MouseDown="Border_MouseDown">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="6"
+                                      ShadowDepth="2"
+                                      Direction="270"
+                                      Color="Black"
+                                      Opacity=".4"/>    
+                </Border.Effect>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="60"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
                                Text="SEND IT"
@@ -54,21 +64,82 @@
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                Margin="20 0"/>
+                    
+                    <!--#region CLOSE ACTION BUTTON-->
                     <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right"
-                                Margin="0 0 20 0">
+                                Margin="0 0 10 0"
+                                Width="50">
                         <Button Content="X"
                                 FontSize="18"
-                                Width="30"
+                                Width="50"
                                 Height="30"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
-                                Foreground="{StaticResource PrimaryDarkBrush500}">
+                                HorizontalAlignment="Right"
+                                Foreground="{StaticResource PrimaryLightBlueBrush}">
                             
                         </Button>
                         
                     </StackPanel>
+                    <!--#endregion-->
+                    
+                    <!--#region NAVIGATION-->
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                Margin="10 0">
+                        <Button Width="64"
+                                Height="40"
+                                Background="Transparent"
+                                BorderBrush="{x:Null}"
+                                HorizontalContentAlignment="Center">
+                            <Button.Content>
+                                <fa:IconImage Icon="home"
+                                              Width="30"
+                                              Height="30"
+                                              Foreground="{StaticResource PrimaryLightBlueBrush}"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Width="70"
+                                Height="40"
+                                Background="Transparent"
+                                BorderBrush="{x:Null}"
+                                HorizontalContentAlignment="Center">
+                            <Button.Content>
+                                <fa:IconImage Icon="NoteSticky"
+                                              Width="30"
+                                              Height="30"
+                                              Foreground="{StaticResource PrimaryLightBlueBrush}"/>
+                            </Button.Content>
+                        </Button>
+                         <Button Width="64"
+                                Height="40"
+                                Background="Transparent"
+                                BorderBrush="{x:Null}"
+                                HorizontalContentAlignment="Center">
+                            <Button.Content>
+                                <fa:IconImage Icon="FileArrowUp"
+                                              Width="30"
+                                              Height="30"
+                                              Foreground="{StaticResource PrimaryLightBlueBrush}"/>
+                            </Button.Content>
+                        </Button>
+                       <Button Width="64"
+                                Height="40"
+                                Background="Transparent"
+                                BorderBrush="{x:Null}"
+                                HorizontalContentAlignment="Center">
+                            <Button.Content>
+                                <fa:IconImage Icon="gear"
+                                              Width="30"
+                                              Height="30"
+                                              Foreground="{StaticResource PrimaryLightBlueBrush}"/>
+                            </Button.Content>
+                        </Button>
+                        
+                    </StackPanel>
+                    <!--#endregion-->
                 </Grid>
                 
             </Border>
