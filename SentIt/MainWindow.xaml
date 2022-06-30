@@ -1,0 +1,89 @@
+﻿<Window x:Class="SentIt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SentIt"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Width="800" 
+        Height="600">
+    <Border Background="{StaticResource Primary100ToSecondary200GradientBrush}"
+            CornerRadius="8"
+            BorderBrush="{StaticResource PrimaryDarkBrush300}"
+            BorderThickness="2"
+            Width="780"
+            Height="580">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="10"
+                              ShadowDepth="8"
+                              Direction="270"
+                              Color="Black"
+                              Opacity=".6"/>
+        </Border.Effect>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <!--#region HEADER-->
+            <Border CornerRadius="8 8 0 0"
+                    Background="{StaticResource PrimaryDarkBrush100}"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2" MouseDown="Border_MouseDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Text="SEND IT"
+                               Foreground="{StaticResource PrimaryLightBlueBrush}"
+                               FontSize="18"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Margin="20 0"/>
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="0 0 20 0">
+                        <Button Content="X"
+                                FontSize="18"
+                                Width="30"
+                                Height="30"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Foreground="{StaticResource PrimaryDarkBrush500}">
+                            
+                        </Button>
+                        
+                    </StackPanel>
+                </Grid>
+                
+            </Border>
+            <!--#endregion-->
+            
+            <!--#region  NAVBAR-->
+            
+            <!--#endregion-->
+            
+            <!--#region MAIN CONTENT-->
+            <ContentControl Grid.Column="1"
+                            Grid.Row="1">
+                
+            </ContentControl>
+            <!--#endregion-->
+        </Grid>
+    </Border>
+</Window>
