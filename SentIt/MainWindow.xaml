@@ -7,6 +7,7 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:vm="clr-namespace:SentIt.ViewModels"
         xmlns:uc="clr-namespace:SentIt.UserControls"
+        xmlns:converter="clr-namespace:SentIt.Converters"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -15,6 +16,9 @@
         Background="{x:Null}"
         Width="800" 
         Height="600">
+    <Window.Resources>
+        <converter:BoolToColorConverter x:Key="boolToColorConverter"/>
+    </Window.Resources>
     <Border Background="{StaticResource Primary100ToSecondary200GradientBrush}"
             CornerRadius="8"
             BorderBrush="{StaticResource PrimaryDarkBrush300}"
@@ -34,7 +38,8 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
-                <RowDefinition />
+                <RowDefinition Height="*"/>
+                  <RowDefinition Height="30" />
             </Grid.RowDefinitions>
             
             <!--#region HEADER-->
@@ -51,7 +56,7 @@
                                       ShadowDepth="2"
                                       Direction="270"
                                       Color="Black"
-                                      Opacity=".4"/>    
+                                      Opacity=".4"/>
                 </Border.Effect>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -66,27 +71,31 @@
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                Margin="20 0"/>
-                    
+
                     <!--#region CLOSE ACTION BUTTON-->
                     <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
-                                HorizontalAlignment="Right"
+                                HorizontalAlignment="Center"
                                 Margin="0 0 10 0"
-                                Width="50">
-                        <Button Content="X"
-                                FontSize="18"
-                                Width="50"
-                                Height="30"
+                                Width="60">
+                        <Button FontSize="18"
+                                Width="60"
+                                Height="40"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
                                 HorizontalAlignment="Right"
-                                Foreground="{StaticResource PrimaryLightBlueBrush}">
-                            
+                                Foreground="{StaticResource PrimaryLightBlueBrush}"
+                                Command="{Binding PowerOffCommand}">
+                            <fa:IconImage Icon="PowerOff"
+                                          Foreground="{StaticResource PrimaryLightBlueBrush}"
+                                          Height="24"
+                                          Width="24"/>
+
                         </Button>
-                        
+
                     </StackPanel>
                     <!--#endregion-->
-                    
+
                     <!--#region NAVIGATION-->
                     <StackPanel Grid.Column="1"
                                 Orientation="Horizontal"
@@ -116,21 +125,21 @@
                                               Foreground="{StaticResource PrimaryLightBlueBrush}"/>
                             </Button.Content>
                         </Button>
-                         <Button Width="64"
+                        <Button Width="64"
                                 Height="40"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
                                 HorizontalContentAlignment="Center"
                                 Command="{Binding NavigateFileShareCommand}">
-                             <Button.Content>
+                            <Button.Content>
                                 <fa:IconImage Icon="FileArrowUp"
                                               Width="30"
                                               Height="30"
                                               Foreground="{StaticResource PrimaryLightBlueBrush}"/>
                             </Button.Content>
-                            
+
                         </Button>
-                       <Button Width="64"
+                        <Button Width="64"
                                 Height="40"
                                 Background="Transparent"
                                 BorderBrush="{x:Null}"
@@ -142,21 +151,19 @@
                                               Foreground="{StaticResource PrimaryLightBlueBrush}"/>
                             </Button.Content>
                         </Button>
-                        
+
                     </StackPanel>
                     <!--#endregion-->
                 </Grid>
-                
+
             </Border>
-            <!--#endregion-->
-            
-            <!--#region  NAVBAR-->
-            
+
             <!--#endregion-->
 
             <!--#region MAIN CONTENT-->
             <ContentControl Grid.Row="1"
-                            Content="{Binding Path=CurrentViewModel}">
+                            Content="{Binding Path=CurrentViewModel}"
+                            Margin="10">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type vm:FileTransferViewModel}">
                         <uc:FileTransferView />
@@ -167,6 +174,30 @@
                 </ContentControl.Resources>
                 
             </ContentControl>
+            <!--#endregion-->
+            
+            <!--#region FOOTER-->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            Margin="10 0">
+                    <TextBlock Text="STATUS:"
+                               FontSize="16"
+                               Foreground="{StaticResource PrimaryLightBlueBrush}"
+                               VerticalAlignment="Center"/>
+                    <Border CornerRadius="50"
+                            Background="{Binding IsReady, Converter={StaticResource boolToColorConverter}}"
+                            Width="10"
+                            Height="10"
+                            Margin="20 0"/>
+
+                </StackPanel>
+            </Grid>
             <!--#endregion-->
         </Grid>
     </Border>

@@ -25,7 +25,7 @@ namespace SentIt.Commands
         public void Execute(object parameter) => _execute((T)parameter);
     }
 
-    internal class RelayCommand : RelayCommand<object>
+    public class RelayCommand : RelayCommand<object>
     {
         public RelayCommand(Action execute)
             : base(_ => execute()) { }
