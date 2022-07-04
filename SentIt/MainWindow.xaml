@@ -4,14 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SentIt"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:vm="clr-namespace:SentIt.ViewModels"
+        xmlns:uc="clr-namespace:SentIt.UserControls"
+        xmlns:converter="clr-namespace:SentIt.Converters"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize"
         AllowsTransparency="True"
-        Background="Transparent"
+        Background="{x:Null}"
         Width="800" 
         Height="600">
+    <Window.Resources>
+        <converter:BoolToColorConverter x:Key="boolToColorConverter"/>
+    </Window.Resources>
     <Border Background="{StaticResource Primary100ToSecondary200GradientBrush}"
             CornerRadius="8"
             BorderBrush="{StaticResource PrimaryDarkBrush300}"
@@ -27,12 +34,12 @@
         </Border.Effect>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
-                <RowDefinition />
+                <RowDefinition Height="*"/>
+                  <RowDefinition Height="30" />
             </Grid.RowDefinitions>
             
             <!--#region HEADER-->
@@ -40,12 +47,22 @@
                     Background="{StaticResource PrimaryDarkBrush100}"
                     Grid.Column="0"
                     Grid.Row="0"
-                    Grid.ColumnSpan="2" MouseDown="Border_MouseDown">
+                    Grid.ColumnSpan="2" 
+                    BorderBrush="{StaticResource PrimaryDarkBrush400}"
+                    BorderThickness="0 0 0 1"
+                    MouseDown="Border_MouseDown">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="6"
+                                      ShadowDepth="2"
+                                      Direction="270"
+                                      Color="Black"
+                                      Opacity=".4"/>
+                </Border.Effect>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="60"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
                                Text="SEND IT"
@@ -54,35 +71,176 @@
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                Margin="20 0"/>
+
+                    <!--#region CLOSE ACTION BUTTON-->
                     <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
-                                HorizontalAlignment="Right"
-                                Margin="0 0 20 0">
-                        <Button Content="X"
+                                HorizontalAlignment="Center"
+                                Margin="0 0 10 0"
+                                Width="60">
+                        <Button 
                                 FontSize="18"
-                                Width="30"
-                                Height="30"
+                                Width="60"
+                                Height="40"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
-                                Foreground="{StaticResource PrimaryDarkBrush500}">
-                            
+                                HorizontalAlignment="Right"
+                                Foreground="{StaticResource PrimaryLightBlueBrush}"
+                                Command="{Binding PowerOffCommand}">
+                            <fa:IconImage Icon="PowerOff"
+                                          Foreground="{StaticResource PrimaryLightBlueBrush}"
+                                          Height="24"
+                                          Width="24"/>
+
                         </Button>
-                        
+
                     </StackPanel>
+                    <!--#endregion-->
+
+                    <!--#region NAVIGATION-->
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                Margin="10 0">
+                        <Button Width="64"
+                                Height="40"
+                                Background="Transparent"
+                                BorderBrush="{x:Null}"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding NavigateHomeCommand}">
+                            <Button.Content>
+                                <fa:IconImage Icon="home"
+                                              Width="30"
+                                              Height="30"
+                                              Foreground="{StaticResource PrimaryLightBlueBrush}"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Width="70"
+                                Height="40"
+                                Background="Transparent"
+                                BorderBrush="{x:Null}"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding NavigateChatCommand}">
+                            <Button.Content>
+                                <fa:IconImage Icon="NoteSticky"
+                                              Width="30"
+                                              Height="30"
+                                              Foreground="{StaticResource PrimaryLightBlueBrush}"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Width="64"
+                                Height="40"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding NavigateFileShareCommand}">
+                            <Button.Content>
+                                <fa:IconImage Icon="FileArrowUp"
+                                              Width="30"
+                                              Height="30"
+                                              Foreground="{StaticResource PrimaryLightBlueBrush}"/>
+                            </Button.Content>
+
+                        </Button>
+                        <Button Width="64"
+                                Height="40"
+                                Background="Transparent"
+                                BorderBrush="{x:Null}"
+                                HorizontalContentAlignment="Center">
+                            <Button.Content>
+                                <fa:IconImage Icon="gear"
+                                              Width="30"
+                                              Height="30"
+                                              Foreground="{StaticResource PrimaryLightBlueBrush}"/>
+                            </Button.Content>
+                        </Button>
+
+                    </StackPanel>
+                    <!--#endregion-->
                 </Grid>
-                
+
             </Border>
+
             <!--#endregion-->
-            
-            <!--#region  NAVBAR-->
-            
-            <!--#endregion-->
-            
+
             <!--#region MAIN CONTENT-->
-            <ContentControl Grid.Column="1"
-                            Grid.Row="1">
+            <ContentControl Grid.Row="1"
+                            Content="{Binding Path=CurrentViewModel}"
+                            Margin="10"
+                            VerticalAlignment="Top">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type vm:FileTransferViewModel}">
+                        <uc:FileTransferView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:ChatViewModel}">
+                        <uc:ChatView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+                        <uc:HomeView />
+                    </DataTemplate>
+                </ContentControl.Resources>
                 
             </ContentControl>
+            <!--#endregion-->
+            
+            <!--#region FOOTER-->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                 <StackPanel Grid.Row="0"
+                            Orientation="Horizontal"
+                            Margin="10 0">
+                    <TextBlock Text="STATUS:"
+                               FontSize="16"
+                               Foreground="{StaticResource PrimaryLightBlueBrush}"
+                               VerticalAlignment="Center"/>
+                    <Border CornerRadius="50"
+                            Background="{Binding IsReady, Mode=TwoWay, Converter={StaticResource boolToColorConverter}}"
+                            Width="10"
+                            Height="10"
+                            Margin="20 0"/>
+                    <TextBlock Text="{Binding CurrentDate}"
+                               FontSize="12"
+                               Foreground="{StaticResource PrimaryOrangeToSecondaryOrange}"
+                               VerticalAlignment="Center"/>
+
+                </StackPanel>
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            Margin="10 0"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="Powered by Suncoast Software 2022"
+                               FontSize="12"
+                               Foreground="{StaticResource PrimaryOrangeToSecondaryOrange}"
+                               VerticalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="4"
+                                              ShadowDepth="4"
+                                              Direction="270"
+                                              Color="black"
+                                              Opacity=".6"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+
+                </StackPanel>
+                <StackPanel Grid.Column="2"
+                            Orientation="Horizontal">
+                    <TextBlock Text="Current View: "
+                               FontSize="14"
+                               Foreground="{StaticResource PrimaryLightBlueBrush}"
+                               VerticalAlignment="Center"
+                               Margin="10 2"/>
+
+                    <TextBlock Grid.Column="2"
+                               Text="{Binding Tag}"
+                               FontSize="16"
+                               Foreground="{StaticResource PrimaryOrangeToSecondaryOrange}"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+                
+            </Grid>
             <!--#endregion-->
         </Grid>
     </Border>

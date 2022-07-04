@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="SentIt.UserControls.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SentIt.UserControls"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             mc:Ignorable="d" 
+             Width="600"
+             Height="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+              <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="1"
+                Grid.Row="1"
+                Background="{StaticResource PrimaryOrangeToSecondaryOrange}"
+                Width="140"
+                CornerRadius="8"
+                HorizontalAlignment="Left"
+                BorderBrush="{StaticResource PrimaryOrangeToSecondaryOrange}"
+                BorderThickness=".7">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="4"
+                                  ShadowDepth="4"
+                                  Direction="270"
+                                  Color="black"
+                                  Opacity=".6"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0"
+                        CornerRadius="8 8 0 0"
+                        Background="{StaticResource Primary100ToSecondary200GradientBrush}">
+                    
+                </Border>
+            </Grid>
+            
+        </Border>
+    </Grid>
+</UserControl>

@@ -10,6 +10,8 @@ namespace SentIt.Interfaces
     public interface INavigator
     {
         public event Action CurrentViewModelChanged;
+        public event Action PreviousViewModelChanged;
         public ViewModelBase CurrentViewModel { get; set; }
+        public ViewModelBase PreviousViewModel { get; set; }
     }
 }
