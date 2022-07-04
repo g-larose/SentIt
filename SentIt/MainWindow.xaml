@@ -78,7 +78,8 @@
                                 HorizontalAlignment="Center"
                                 Margin="0 0 10 0"
                                 Width="60">
-                        <Button FontSize="18"
+                        <Button 
+                                FontSize="18"
                                 Width="60"
                                 Height="40"
                                 Background="{x:Null}"
@@ -163,7 +164,8 @@
             <!--#region MAIN CONTENT-->
             <ContentControl Grid.Row="1"
                             Content="{Binding Path=CurrentViewModel}"
-                            Margin="10">
+                            Margin="10"
+                            VerticalAlignment="Top">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type vm:FileTransferViewModel}">
                         <uc:FileTransferView />
@@ -183,7 +185,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0"
+                 <StackPanel Grid.Row="0"
                             Orientation="Horizontal"
                             Margin="10 0">
                     <TextBlock Text="STATUS:"
@@ -195,6 +197,24 @@
                             Width="10"
                             Height="10"
                             Margin="20 0"/>
+
+                </StackPanel>
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            Margin="10 0"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="Powered by Suncoast Software 2022"
+                               FontSize="12"
+                               Foreground="{StaticResource PrimaryOrangeToSecondaryOrange}"
+                               VerticalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="4"
+                                              ShadowDepth="4"
+                                              Direction="270"
+                                              Color="black"
+                                              Opacity=".6"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
 
                 </StackPanel>
             </Grid>

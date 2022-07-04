@@ -1,4 +1,5 @@
 ﻿using SentIt.Commands;
+using SentIt.Globals;
 using SentIt.Interfaces;
 using SentIt.Navigation;
 using System;
@@ -13,6 +14,7 @@ namespace SentIt.ViewModels
     public class AppViewModel : ViewModelBase
     {
         private readonly INavigator? _navigator;
+        private AppViewModel _appViewModel;
         public ViewModelBase? CurrentViewModel => _navigator.CurrentViewModel;
         public ViewModelBase PreviousViewModel => _navigator.PreviousViewModel;
         public CommandBase? NavigateHomeCommand { get; }
@@ -21,19 +23,24 @@ namespace SentIt.ViewModels
         public CommandBase? NavigateSettingsCommand { get; }
         public RelayCommand PowerOffCommand { get; }
 
-        private bool isReady;
+        private Singleton Instance { get; } = Singleton.Instance;
+
+        private bool _isReady;
         public bool IsReady
         {
-            get => isReady;
-            set => OnPropertyChanged(ref isReady, value);
+            get => _isReady;
+            set => OnPropertyChanged(ref _isReady, value);
         }
+
 
         public AppViewModel(INavigator navigator)
         {
             _navigator = navigator;
+            _appViewModel = this;
             _navigator.CurrentViewModelChanged += OnCurrentViewModelChanged;
             _navigator.PreviousViewModelChanged += _navigator_PreviousViewModelChanged;
-            NavigateFileShareCommand = new NavigateCommand<FileTransferViewModel>(_navigator, () => new FileTransferViewModel(_navigator));
+            
+            NavigateFileShareCommand = new NavigateCommand<FileTransferViewModel>(_navigator, () => new FileTransferViewModel(_navigator, _appViewModel));
             NavigateChatCommand = new NavigateCommand<ChatViewModel>(_navigator, () => new ChatViewModel());
             PowerOffCommand = new RelayCommand(PowerOff);
         }

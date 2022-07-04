@@ -9,7 +9,7 @@
              xmlns:converter="clr-namespace:SentIt.Converters"
              mc:Ignorable="d" 
              Width="700"
-             Height="400">
+             Height="250">
     <UserControl.Resources>
         <converter:BoolToColorConverter x:Key="boolToColorConverter"/>
     </UserControl.Resources>
@@ -22,15 +22,15 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
-           
-             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
 
       
         <Border Grid.Column="0"
                 Grid.Row="0"
                 Grid.ColumnSpan="3"
-                Grid.RowSpan="2"
+                Grid.RowSpan="3"
                 CornerRadius="6"
                 BorderBrush="{StaticResource PrimaryDarkBrush300}"
                 BorderThickness="1"
@@ -51,7 +51,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="100"/>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="80"/>
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 
@@ -73,14 +73,19 @@
                                  Height="40"
                                  Foreground="{StaticResource PrimaryLightBlueBrush}"
                                  md:HintAssist.Foreground="{StaticResource PrimaryLightBlueBrush}"
-                                 md:HintAssist.Hint="Select File"/>
+                                 md:HintAssist.Hint="Select File"
+                                 Text="{Binding SelectedFile, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="10 0"/>
                         <Button Width="60"
                                 Height="40"         
                                 Background="{x:Null}"
                                 BorderBrush="Transparent"
-                                Margin="20 0">
-                            <fa:IconImage Icon="FolderOpen"
+                                Margin="10 0"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding SelectFileCommand}">
+                            <fa:IconImage Icon="FileArrowUp"
                                           Foreground="{StaticResource PrimaryLightBlueBrush}"
+                                         
                                           Width="40"
                                           Height="20"/>
                         </Button>
@@ -97,7 +102,11 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="1"
                                 Orientation="Horizontal"
-                                Margin="10">
+                                Margin="10"
+                                Height="60"
+                                VerticalAlignment="Top">
+                        
+                        <!--#region SEND BUTTON -->
                         <Button Width="120"
                                 Height="40"
                                 Background="{StaticResource PrimaryDarkBrush300}"
@@ -117,11 +126,50 @@
                                                   Foreground="{Binding IsReady, Converter={StaticResource boolToColorConverter}, FallbackValue={StaticResource PrimaryOrange}}"/>
                                 </StackPanel>
                             </Button.Content>
+                        </Button>
+                        <!--#endregion-->
+                        
+                        <!--#region CANCEL BUTTON-->
+                         <Button Width="130"
+                                Height="40"
+                                Background="{StaticResource PrimaryDarkBrush300}"
+                                BorderBrush="Transparent"
+                                HorizontalAlignment="Right"
+                                Margin="20 0">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="CANCEL"
+                                           Foreground="{StaticResource PrimaryLightBlueBrush}"
+                                           FontSize="16"
+                                           VerticalAlignment="Center"/>
+                                    <fa:IconImage Icon="Cancel"
+                                                  HorizontalAlignment="Right"
+                                                  Margin="10 0"
+                                                  Height="30"
+                                                  Foreground="{StaticResource PrimaryOrangeBrush}"/>
+                                </StackPanel>
+                            </Button.Content>
                             
                         </Button>
+                        <!--#endregion-->
                     </StackPanel>
                 </Grid>
                 <!--#endregion-->
+                
+                <StackPanel Grid.Row="3"
+                            Orientation="Horizontal"
+                            Margin="10 0">
+                    <TextBlock Text="STATUS:"
+                               FontSize="16"
+                               Foreground="{StaticResource PrimaryLightBlueBrush}"
+                               VerticalAlignment="Center"/>
+                    <Border CornerRadius="50"
+                            Background="{Binding IsReady, Converter={StaticResource boolToColorConverter}}"
+                            Width="10"
+                            Height="10"
+                            Margin="20 0"/>
+
+                </StackPanel>
             </Grid>
             
         </Border>
