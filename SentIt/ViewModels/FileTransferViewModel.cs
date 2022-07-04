@@ -1,20 +1,11 @@
-﻿using SentIt.Commands;
-using SentIt.Globals;
-using SentIt.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Windows.Input;
-
-namespace SentIt.ViewModels
+﻿namespace SentIt.ViewModels
 {
     public class FileTransferViewModel : ViewModelBase
     {
         private readonly INavigator _navigator;
         private AppViewModel _appViewModel;
+
+        public event TextChangedEventHandler TextChanged;
         public ICommand SelectFileCommand { get; } 
 
         private bool isReady;
@@ -35,8 +26,28 @@ namespace SentIt.ViewModels
         {
             _navigator = navigator;
             _appViewModel = appViewModel;
+            TextChanged += FileTransferViewModel_TextChanged1;
             SelectFileCommand = new RelayCommand(SelectFile);
-        } 
+            _appViewModel.Tag = "File Transfer View";
+
+           
+        }
+
+        private void FileTransferViewModel_TextChanged1(object sender, TextChangedEventArgs e)
+        {
+          
+        }
+
+        private void FileTransferViewModel_TextChanged(object? sender, EventArgs e)
+        {
+            //if (sender.GetType() == typeof(TextBox))
+            //{
+            //    var textBox = sender as TextBox;
+            //    if (textBox?.Text.Length < 1)
+            //        IsReady = false;
+            //}
+        
+        }
 
         private void SelectFile()
         {

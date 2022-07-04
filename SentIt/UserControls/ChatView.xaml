@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:uc="clr-namespace:SentIt.UserControls"
              xmlns:local="clr-namespace:SentIt.UserControls"
              mc:Ignorable="d" 
              Height="400"
@@ -21,25 +22,45 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="20" />
                  <RowDefinition Height="*" />
-                 <RowDefinition Height="60" />
+                 <RowDefinition Height="70" />
             </Grid.RowDefinitions>
-            <RichTextBox Grid.Column="1"
-                         Grid.Row="1"
-                         Background="Transparent"/>
+            
+            <!--#region  MESSAGES-->
+            <ScrollViewer Grid.Column="1"
+                       Grid.Row="1">
+                <ItemsControl ItemsSource="{Binding Messages}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <uc:SingleRowMessageView />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <!--#endregion-->
+            
             <StackPanel Grid.Column="1"
                         Grid.Row="2"
-                        Orientation="Horizontal">
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        Margin="4 4">
                  <TextBox 
                      Style="{StaticResource MaterialDesignTextBox}"
                      Height="40"
                      Width="400"/>
                 <Button Width="60"
-                        Height="30"
-                        HorizontalAlignment="Right">
+                        Height="32"
+                        HorizontalAlignment="Right"
+                        IsEnabled="{Binding IsReady}"
+                        Margin="10 4">
                     <Button.Content>
                         <fa:IconImage Icon="ArrowRight"
-                                      Width="30"
-                                      Height="30"
+                                      Width="18"
+                                      Height="20"
                                       Foreground="White"/>
                     </Button.Content>
                     

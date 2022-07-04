@@ -1,17 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using SentIt.Interfaces;
-using SentIt.Navigation;
-using SentIt.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-
-namespace SentIt
+﻿namespace SentIt
 {
     public partial class App : Application
     {
@@ -22,6 +9,7 @@ namespace SentIt
             _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
             {
                 services.AddSingleton<AppViewModel>();
+                services.AddSingleton<Singleton>();
                 services.AddSingleton<INavigator, Navigator>();
                 services.AddSingleton<MainWindow>(s => new MainWindow()
                 {

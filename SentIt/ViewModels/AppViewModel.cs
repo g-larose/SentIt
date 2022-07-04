@@ -1,22 +1,10 @@
-﻿using SentIt.Commands;
-using SentIt.Globals;
-using SentIt.Interfaces;
-using SentIt.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-
-namespace SentIt.ViewModels
+﻿namespace SentIt.ViewModels
 {
     public class AppViewModel : ViewModelBase
     {
         private readonly INavigator? _navigator;
         private AppViewModel _appViewModel;
         public ViewModelBase? CurrentViewModel => _navigator.CurrentViewModel;
-        public ViewModelBase PreviousViewModel => _navigator.PreviousViewModel;
         public CommandBase? NavigateHomeCommand { get; }
         public CommandBase? NavigateFileShareCommand { get; }
         public CommandBase? NavigateChatCommand { get; }
@@ -32,27 +20,37 @@ namespace SentIt.ViewModels
             set => OnPropertyChanged(ref _isReady, value);
         }
 
+        private string _tag;
+        public string Tag
+        {
+            get => _tag;
+            set => OnPropertyChanged(ref _tag, value);
+        }
 
+        private string _currentDate;
+        public string CurrentDate
+        {
+            get => _currentDate;
+            set => OnPropertyChanged(ref _currentDate, value);
+        }
         public AppViewModel(INavigator navigator)
         {
             _navigator = navigator;
             _appViewModel = this;
             _navigator.CurrentViewModelChanged += OnCurrentViewModelChanged;
-            _navigator.PreviousViewModelChanged += _navigator_PreviousViewModelChanged;
-            
-            NavigateFileShareCommand = new NavigateCommand<FileTransferViewModel>(_navigator, () => new FileTransferViewModel(_navigator, _appViewModel));
-            NavigateChatCommand = new NavigateCommand<ChatViewModel>(_navigator, () => new ChatViewModel());
-            PowerOffCommand = new RelayCommand(PowerOff);
-        }
 
-        private void _navigator_PreviousViewModelChanged()
-        {
-            OnPropertyChanged(nameof(PreviousViewModel));
+            Tag = "Main Window";
+            CurrentDate = DateTime.Now.ToShortDateString();
+
+            NavigateFileShareCommand = new NavigateCommand<FileTransferViewModel>(_navigator, () => new FileTransferViewModel(_navigator, _appViewModel));
+            NavigateChatCommand = new NavigateCommand<ChatViewModel>(_navigator, () => new ChatViewModel(_navigator, _appViewModel));
+            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(_navigator, () => new HomeViewModel(_navigator, _appViewModel));
+            PowerOffCommand = new RelayCommand(PowerOff);
         }
 
         private void PowerOff()
         {
-            Application.Current.Shutdown();
+            System.Windows.Application.Current.Shutdown();
         }
 
         private void OnCurrentViewModelChanged()
